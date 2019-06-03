@@ -7,10 +7,9 @@ import {
   TouchableOpacity,
   Platform
 } from "react-native";
-import { connect } from "react-redux";
 import { Navigation } from "react-native-navigation";
-
-import Icon from "react-native-vector-icons/Ionicons";
+import ProjectListItem from "../../components/ProjectListItem/ProjectListItem";
+import Logo from "../../assets/logo.png";
 
 class BrowseScreen extends React.Component {
   componentDidMount() {
@@ -28,10 +27,32 @@ class BrowseScreen extends React.Component {
       });
     }
   };
+
+  selectProjectHandler = () => {
+    console.log("pressed");
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: "softforest.ProjectDetailScreen",
+        passProps: {
+          project: "cafe"
+        }
+        // options: {
+        //     topBar: {
+        //         title: {
+        //             text: 'Cafe Management System'
+        //         }
+        //     }
+        // }
+      }
+    });
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>BrowseScreen</Text>
+        <ProjectListItem image={Logo} onPress={this.selectProjectHandler} />
+        <ProjectListItem image={Logo} />
+        <ProjectListItem image={Logo} />
       </View>
     );
   }
