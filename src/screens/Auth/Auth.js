@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import Logo from "../../assets/logo.png";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
+import startMainTabs from "../../screens/MainTabs/startMainTabs";
 
 class Auth extends React.Component {
   state = {
@@ -97,6 +98,10 @@ class Auth extends React.Component {
     });
   };
 
+  continueHandler = () => {
+    startMainTabs();
+  };
+
   render() {
     return (
       <ScrollView style={styles.container}>
@@ -128,7 +133,11 @@ class Auth extends React.Component {
           )}
         </View>
         <View style={styles.buttonContainer}>
-          <Button title="Continue" color="#05C0BA" />
+          <Button
+            title="Continue"
+            color="#05C0BA"
+            onPress={this.continueHandler}
+          />
         </View>
         <View style={styles.signupTextContainer}>
           <Text style={styles.signupText}>
