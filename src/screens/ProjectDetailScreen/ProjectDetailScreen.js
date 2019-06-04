@@ -77,9 +77,26 @@ class ProjectDetailScreen extends React.Component {
                   placeholder={this.state.project.image}
                   logo="logo"
                 />
-                <Text style={styles.priceText}>
-                  ${this.state.project.price}
-                </Text>
+                {this.state.project.on_sale ? (
+                  <View style={styles.priceContainer}>
+                    <Text style={styles.discountText}>
+                      ${this.state.project.discount_rate}{" "}
+                      <Text style={styles.strike}>
+                        {" "}
+                        ${this.state.project.price}
+                      </Text>
+                    </Text>
+                    <Text style={{ color: "#05C0BA" }}>
+                      <Icon name="md-time" /> 30% off{" "}
+                    </Text>
+                  </View>
+                ) : (
+                  <View style={styles.priceContainer}>
+                    <Text style={styles.priceText}>
+                      ${this.state.project.price}
+                    </Text>
+                  </View>
+                )}
                 <View style={styles.buyButton}>
                   <Button title="Buy Now" color="#05C0BA" />
                 </View>
@@ -139,18 +156,32 @@ const styles = StyleSheet.create({
   },
   description: {
     marginTop: 5,
-    marginBottom: 5,
+    marginBottom: 20,
     justifyContent: "center",
-    fontSize: 15
+    fontSize: 16
   },
   videoContainer: {
     backgroundColor: "white",
     elevation: 2
   },
+  priceContainer: {
+    marginLeft: 10
+  },
   priceText: {
     fontSize: 22,
     fontWeight: "bold",
     marginTop: 10
+  },
+  discountText: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginTop: 10
+  },
+  strike: {
+    fontSize: 18,
+    marginTop: 10,
+    color: "#aaa",
+    textDecorationLine: "line-through"
   },
   buyButton: {
     marginTop: 10,

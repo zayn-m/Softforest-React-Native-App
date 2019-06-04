@@ -40,8 +40,7 @@ const startTabs = () => {
                           options: {
                             topBar: {
                               title: {
-                                text: "Browse",
-                                color: "red"
+                                text: "Browse"
                               },
                               leftButtons: [
                                 {
@@ -73,9 +72,9 @@ const startTabs = () => {
                           options: {
                             topBar: {
                               title: {
-                                text: "Library",
-                                color: "red"
+                                text: "Library"
                               },
+
                               leftButtons: [
                                 {
                                   icon: sources[2],
