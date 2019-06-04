@@ -4,12 +4,10 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 const startTabs = () => {
   Promise.all([
-    Icon.getImageSource(Platform.OS === "android" ? "md-map" : "ios-map", 30),
-    Icon.getImageSource(
-      Platform.OS === "android" ? "md-share-alt" : "ios-share-alt",
-      30
-    ),
-    Icon.getImageSource(Platform.OS === "android" ? "md-menu" : "ios-menu", 30)
+    Icon.getImageSource(Platform.OS === "android" ? "md-star" : "ios-star", 30),
+    Icon.getImageSource(Platform.OS === "android" ? "md-list" : "ios-list", 30),
+    Icon.getImageSource(Platform.OS === "android" ? "md-menu" : "ios-menu", 30),
+    Icon.getImageSource(Platform.OS === "android" ? "md-cart" : "ios-cart", 30)
   ]).then(sources => {
     Navigation.setRoot({
       root: {
@@ -88,6 +86,39 @@ const startTabs = () => {
                             bottomTab: {
                               text: "Library",
                               icon: sources[1],
+                              testID: "SECOND_TAB_BAR_BUTTON"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        stack: {
+                          children: [
+                            {
+                              component: {
+                                name: "softforest.LibraryScreen",
+                                passProps: {
+                                  text: "This is tab 2"
+                                }
+                              }
+                            }
+                          ],
+                          options: {
+                            topBar: {
+                              title: {
+                                text: "Cart",
+                                color: "red"
+                              },
+                              leftButtons: [
+                                {
+                                  icon: sources[2],
+                                  id: "toggleDrawer"
+                                }
+                              ]
+                            },
+                            bottomTab: {
+                              text: "Cart",
+                              icon: sources[3],
                               testID: "SECOND_TAB_BAR_BUTTON"
                             }
                           }

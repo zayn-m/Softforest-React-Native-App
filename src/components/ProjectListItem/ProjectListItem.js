@@ -7,7 +7,7 @@ const projectListItem = props => {
     <TouchableOpacity {...props}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image style={styles.image} source={props.image} />
+          <Image style={styles.image} source={{ uri: props.image }} />
         </View>
         <View style={styles.textContainer}>
           <View style={styles.ratingContainer}>
@@ -21,14 +21,14 @@ const projectListItem = props => {
               starSize={18}
             />
             <Text>
-              <Text style={styles.rating}> 4.8</Text> (12)
+              <Text style={styles.rating}> {props.ratings}</Text> (12)
             </Text>
           </View>
           <View>
-            <Text>Cafe Management System</Text>
+            <Text>{props.title}</Text>
           </View>
           <View style={styles.priceContainer}>
-            <Text style={styles.price}>$5000</Text>
+            <Text style={styles.price}>${props.price}</Text>
           </View>
         </View>
       </View>
