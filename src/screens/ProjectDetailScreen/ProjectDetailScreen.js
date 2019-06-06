@@ -16,11 +16,13 @@ import { HOST_URL } from "../../settings";
 import Icon from "react-native-vector-icons/Ionicons";
 import HeadingText from "../../components/UI/HeadingText/HeadingText";
 import Button from "../../components/UI/Button/Button";
+import RecommendationItem from "../../components/RecommendationItem/RecommendationItem";
 
 class ProjectDetailScreen extends React.Component {
   state = {
     project: null,
-    profile: null
+    profile: null,
+    recommendations: null
   };
 
   componentDidMount() {
@@ -47,6 +49,15 @@ class ProjectDetailScreen extends React.Component {
       .then(response => response.json())
       .then(responseJson => this.setState({ profile: responseJson }))
       .catch(error => console.log(error));
+
+    fetch(
+      `${HOST_URL}/projects-random-list/?q=${this.props.category}&id=${
+        this.props.id
+      }`
+    )
+      .then(response => response.json())
+      .then(responseJson => this.setState({ recommendations: responseJson }))
+      .catch(error => console.log(error));
   };
 
   navigationButtonPressed = event => {
@@ -61,10 +72,26 @@ class ProjectDetailScreen extends React.Component {
     }
   };
 
+  selectProjectHandler = (slug, user, id, category) => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: "softforest.ProjectDetailScreen",
+        passProps: {
+          projectSlug: slug,
+          userId: user,
+          id: id,
+          category: category
+        }
+      }
+    });
+  };
+
   render() {
     return (
       <ScrollView style={styles.container}>
-        {this.state.project && this.state.profile ? (
+        {this.state.project &&
+        this.state.profile &&
+        this.state.recommendations ? (
           <>
             <View style={styles.thumbnailContainer}>
               <Image
@@ -110,7 +137,7 @@ class ProjectDetailScreen extends React.Component {
                   <Text style={styles.addToCartButton}>ADD TO CART</Text>
                 </View>
               </View>
-              <View style={styles.modules}>
+              <View style={styles.card}>
                 <HeadingText>Modules</HeadingText>
                 {this.state.project.modules.map(ml => (
                   <Text key={ml.id} style={styles.moduleText}>
@@ -119,7 +146,7 @@ class ProjectDetailScreen extends React.Component {
                   </Text>
                 ))}
               </View>
-              <View style={styles.modules}>
+              <View style={styles.card}>
                 <HeadingText>Technologies</HeadingText>
                 {this.state.project.technologies.map(ml => (
                   <Text key={ml.id} style={styles.moduleText}>
@@ -128,7 +155,7 @@ class ProjectDetailScreen extends React.Component {
                   </Text>
                 ))}
               </View>
-              <View style={styles.modules}>
+              <View style={styles.card}>
                 <HeadingText>Requirements</HeadingText>
                 {this.state.project.requirements.map(ml => (
                   <Text key={ml.id} style={styles.moduleText}>
@@ -138,13 +165,47 @@ class ProjectDetailScreen extends React.Component {
                 ))}
               </View>
               <View style={styles.profileContainer}>
-                <HeadingText>{this.state.profile.profile_name}</HeadingText>
-                <Image
-                  source={{ uri: this.state.profile.image }}
-                  stlye={styles.profileImage}
-                />
-                <Text>{this.state.profile.profile_title}</Text>
-                <Text>Request for modification</Text>
+                <View style={styles.profileImageContainer}>
+                  <Image
+                    source={{ uri: this.state.profile.image }}
+                    style={styles.profileImage}
+                  />
+                </View>
+                <View style={styles.profileDescription}>
+                  <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+                    {this.state.profile.profile_name}
+                  </Text>
+                  <Text>{this.state.profile.profile_title}</Text>
+                  <View style={styles.requestButtonContainer}>
+                    <Text style={styles.requestButton}>
+                      Request for modifications
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.card}>
+                <HeadingText>These might interest you</HeadingText>
+                {this.state.recommendations.map(project => (
+                  <RecommendationItem
+                    key={project.id}
+                    title={project.title}
+                    image={project.image}
+                    price={project.price}
+                    ratings={project.ratings}
+                    onSale={project.on_sale}
+                    discountRate={project.discount_rate}
+                    username={project.username}
+                    onPress={() =>
+                      this.selectProjectHandler(
+                        project.slug,
+                        project.user,
+                        project.id,
+                        project.category
+                      )
+                    }
+                  />
+                ))}
+                <View style={{ marginTop: 20 }} />
               </View>
             </View>
           </>
@@ -209,9 +270,10 @@ const styles = StyleSheet.create({
   },
   addToCartButton: {
     color: "#05C0BA",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    textTransform: "uppercase"
   },
-  modules: {
+  card: {
     elevation: 2,
     marginTop: 10,
     backgroundColor: "white"
@@ -220,6 +282,35 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 5,
     marginLeft: 10
+  },
+  profileContainer: {
+    flexDirection: "row",
+    backgroundColor: "white",
+    elevation: 2,
+    width: "100%",
+    height: 100,
+    marginTop: 10
+  },
+  profileImageContainer: {
+    flex: 0.5,
+    resizeMode: "center"
+  },
+  profileImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "contain"
+  },
+  profileDescription: {
+    flex: 1
+  },
+  requestButtonContainer: {
+    alignItems: "center",
+    marginTop: 20
+  },
+  requestButton: {
+    color: "#05C0BA",
+    fontWeight: "bold",
+    textTransform: "uppercase"
   }
 });
 

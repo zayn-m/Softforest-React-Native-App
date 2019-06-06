@@ -42,13 +42,15 @@ class BrowseScreen extends React.Component {
       .catch(error => console.log(error));
   };
 
-  selectProjectHandler = (slug, user) => {
+  selectProjectHandler = (slug, user, id, category) => {
     Navigation.push(this.props.componentId, {
       component: {
         name: "softforest.ProjectDetailScreen",
         passProps: {
           projectSlug: slug,
-          userId: user
+          userId: user,
+          id: id,
+          category: category
         }
         // options: {
         //     topBar: {
@@ -82,7 +84,12 @@ class BrowseScreen extends React.Component {
             onSale={project.on_sale}
             discountRate={project.discount_rate}
             onPress={() =>
-              this.selectProjectHandler(project.slug, project.user)
+              this.selectProjectHandler(
+                project.slug,
+                project.user,
+                project.id,
+                project.category
+              )
             }
           />
         ))}
