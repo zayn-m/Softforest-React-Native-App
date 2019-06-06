@@ -19,7 +19,8 @@ import Button from "../../components/UI/Button/Button";
 
 class ProjectDetailScreen extends React.Component {
   state = {
-    project: null
+    project: null,
+    profile: null
   };
 
   componentDidMount() {
@@ -41,6 +42,11 @@ class ProjectDetailScreen extends React.Component {
       .then(response => response.json())
       .then(responseJson => this.setState({ project: responseJson }))
       .catch(error => console.log(error));
+
+    fetch(`${HOST_URL}/profiles/${this.props.userId}/`)
+      .then(response => response.json())
+      .then(responseJson => this.setState({ profile: responseJson }))
+      .catch(error => console.log(error));
   };
 
   navigationButtonPressed = event => {
@@ -58,7 +64,7 @@ class ProjectDetailScreen extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        {this.state.project !== null ? (
+        {this.state.project && this.state.profile ? (
           <>
             <View style={styles.thumbnailContainer}>
               <Image
@@ -130,6 +136,15 @@ class ProjectDetailScreen extends React.Component {
                     {ml.name}
                   </Text>
                 ))}
+              </View>
+              <View style={styles.profileContainer}>
+                <HeadingText>{this.state.profile.profile_name}</HeadingText>
+                <Image
+                  source={{ uri: this.state.profile.image }}
+                  stlye={styles.profileImage}
+                />
+                <Text>{this.state.profile.profile_title}</Text>
+                <Text>Request for modification</Text>
               </View>
             </View>
           </>

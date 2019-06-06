@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+import { connect } from "react-redux";
 import Logo from "../../assets/logo.png";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
