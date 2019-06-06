@@ -4,8 +4,11 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 const startTabs = () => {
   Promise.all([
-    Icon.getImageSource(Platform.OS === "android" ? "md-star" : "ios-star", 30),
     Icon.getImageSource(Platform.OS === "android" ? "md-list" : "ios-list", 30),
+    Icon.getImageSource(
+      Platform.OS === "android" ? "md-folder" : "ios-folder",
+      30
+    ),
     Icon.getImageSource(Platform.OS === "android" ? "md-menu" : "ios-menu", 30),
     Icon.getImageSource(Platform.OS === "android" ? "md-cart" : "ios-cart", 30)
   ]).then(sources => {

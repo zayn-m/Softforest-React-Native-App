@@ -5,7 +5,8 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Platform
+  Platform,
+  ActivityIndicator
 } from "react-native";
 import { HOST_URL } from "../../settings";
 import { Navigation } from "react-native-navigation";
@@ -63,6 +64,14 @@ class BrowseScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        {this.state.projects.length === 0 && (
+          <ActivityIndicator
+            size="large"
+            color="#05C0BA"
+            style={{ marginTop: 34 }}
+          />
+        )}
+
         {this.state.projects.map(project => (
           <ProjectListItem
             key={project.id}
