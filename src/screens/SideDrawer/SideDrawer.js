@@ -38,7 +38,7 @@ class SideDrawer extends React.Component {
               color="#aaa"
               style={styles.drawerItemIcon}
             />
-            <Text>Sign Out</Text>
+            <Text>Share our Softforest app</Text>
           </View>
           <View style={styles.drawerItem}>
             <Icon
