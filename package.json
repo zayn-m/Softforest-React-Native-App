@@ -8,9 +8,11 @@
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug"
   },
   "dependencies": {
+    "moment": "^2.24.0",
     "react": "16.8.3",
     "react-native": "0.59.8",
     "react-native-af-video-player": "^0.2.1",
+    "react-native-image-zoom-viewer": "^2.2.26",
     "react-native-keep-awake": "^4.0.0",
     "react-native-linear-gradient": "^2.5.4",
     "react-native-navigation": "^2.21.0",

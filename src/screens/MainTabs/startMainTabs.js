@@ -10,7 +10,11 @@ const startTabs = () => {
       30
     ),
     Icon.getImageSource(Platform.OS === "android" ? "md-menu" : "ios-menu", 30),
-    Icon.getImageSource(Platform.OS === "android" ? "md-cart" : "ios-cart", 30)
+    Icon.getImageSource(Platform.OS === "android" ? "md-cart" : "ios-cart", 30),
+    Icon.getImageSource(
+      Platform.OS === "android" ? "md-contact" : "ios-contact",
+      30
+    )
   ]).then(sources => {
     Navigation.setRoot({
       root: {
@@ -108,8 +112,7 @@ const startTabs = () => {
                           options: {
                             topBar: {
                               title: {
-                                text: "Cart",
-                                color: "red"
+                                text: "Cart"
                               },
                               leftButtons: [
                                 {

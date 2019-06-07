@@ -4,25 +4,26 @@ import {
   Image,
   Text,
   StyleSheet,
-  TouchableOpacity,
-  Platform,
   BackHandler,
   ScrollView
 } from "react-native";
+import ImageViewer from "react-native-image-zoom-viewer";
 import Video from "react-native-af-video-player";
-import { connect } from "react-redux";
+import LinearGradient from "react-native-linear-gradient";
 import { Navigation } from "react-native-navigation";
 import { HOST_URL } from "../../settings";
 import Icon from "react-native-vector-icons/Ionicons";
 import HeadingText from "../../components/UI/HeadingText/HeadingText";
 import Button from "../../components/UI/Button/Button";
 import RecommendationItem from "../../components/RecommendationItem/RecommendationItem";
+import Comment from "../../components/Comment/Comment";
 
 class ProjectDetailScreen extends React.Component {
   state = {
     project: null,
     profile: null,
-    recommendations: null
+    recommendations: null,
+    reviews: null
   };
 
   componentDidMount() {
@@ -58,6 +59,11 @@ class ProjectDetailScreen extends React.Component {
       .then(response => response.json())
       .then(responseJson => this.setState({ recommendations: responseJson }))
       .catch(error => console.log(error));
+
+    fetch(`${HOST_URL}/comments/?q=${this.props.id}`)
+      .then(response => response.json())
+      .then(responseJson => this.setState({ reviews: responseJson }))
+      .catch(error => console.log(error));
   };
 
   navigationButtonPressed = event => {
@@ -87,11 +93,19 @@ class ProjectDetailScreen extends React.Component {
   };
 
   render() {
+    let images = [];
+
+    if (this.state.project) {
+      this.state.project.snapshots.map(snapshot => {
+        images.push({ url: snapshot.image });
+      });
+    }
     return (
       <ScrollView style={styles.container}>
         {this.state.project &&
         this.state.profile &&
-        this.state.recommendations ? (
+        this.state.recommendations &&
+        this.state.reviews ? (
           <>
             <View style={styles.thumbnailContainer}>
               <Image
@@ -105,11 +119,16 @@ class ProjectDetailScreen extends React.Component {
                 {this.state.project.description}
               </Text>
               <View style={styles.videoContainer}>
-                <Video
-                  url={this.state.project.video}
-                  placeholder={this.state.project.image}
-                  logo="logo"
-                />
+                <LinearGradient
+                  colors={["#4c669f", "#3b5998", "#192f6a"]}
+                  style={styles.linearGradient}
+                >
+                  <Video
+                    url={this.state.project.video}
+                    placeholder={this.state.project.image}
+                    logo="logo"
+                  />
+                </LinearGradient>
                 {this.state.project.on_sale ? (
                   <View style={styles.priceContainer}>
                     <Text style={styles.discountText}>
@@ -136,6 +155,11 @@ class ProjectDetailScreen extends React.Component {
                 <View style={styles.addToCartButtonContainer}>
                   <Text style={styles.addToCartButton}>ADD TO CART</Text>
                 </View>
+              </View>
+              <View style={[styles.thumbnailContainer, styles.card]}>
+                <HeadingText>Snapshots</HeadingText>
+
+                <ImageViewer style={styles.thumbnail} imageUrls={images} />
               </View>
               <View style={styles.card}>
                 <HeadingText>Modules</HeadingText>
@@ -177,9 +201,7 @@ class ProjectDetailScreen extends React.Component {
                   </Text>
                   <Text>{this.state.profile.profile_title}</Text>
                   <View style={styles.requestButtonContainer}>
-                    <Text style={styles.requestButton}>
-                      Request for modifications
-                    </Text>
+                    <Text style={styles.requestButton}>view profile</Text>
                   </View>
                 </View>
               </View>
@@ -206,6 +228,22 @@ class ProjectDetailScreen extends React.Component {
                   />
                 ))}
                 <View style={{ marginTop: 20 }} />
+              </View>
+              <View style={styles.card}>
+                <HeadingText>Feedback</HeadingText>
+                <HeadingText style={styles.ratingHeading}>
+                  {this.state.project.ratings}{" "}
+                  <Text style={{ fontSize: 16 }}> average rating</Text>
+                </HeadingText>
+
+                {this.state.reviews.map(review => (
+                  <Comment
+                    key={review.id}
+                    content={review.content}
+                    timestamp={review.timestamp}
+                    rating={review.rating}
+                  />
+                ))}
               </View>
             </View>
           </>
@@ -235,6 +273,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     justifyContent: "center",
     fontSize: 16
+  },
+  linearGradient: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 5,
+    backgroundColor: "black"
   },
   videoContainer: {
     backgroundColor: "white",
@@ -311,6 +356,9 @@ const styles = StyleSheet.create({
     color: "#05C0BA",
     fontWeight: "bold",
     textTransform: "uppercase"
+  },
+  ratingHeading: {
+    fontSize: 34
   }
 });
 

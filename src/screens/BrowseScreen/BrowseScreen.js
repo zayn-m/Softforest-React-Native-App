@@ -6,22 +6,29 @@ import {
   StyleSheet,
   TouchableOpacity,
   Platform,
-  ActivityIndicator
+  ActivityIndicator,
+  RefreshControl,
+  ScrollView
 } from "react-native";
 import { HOST_URL } from "../../settings";
 import { Navigation } from "react-native-navigation";
 import ProjectListItem from "../../components/ProjectListItem/ProjectListItem";
-import Logo from "../../assets/logo.png";
 
 class BrowseScreen extends React.Component {
   state = {
-    projects: []
+    projects: [],
+    refreshing: false
   };
 
   componentDidMount() {
     this.navigationEventListener = Navigation.events().bindComponent(this);
     this.fetchData();
   }
+
+  _onRefresh = () => {
+    this.setState({ refreshing: true });
+    this.fetchData();
+  };
 
   navigationButtonPressed = event => {
     if (event.buttonId === "toggleDrawer") {
@@ -38,7 +45,9 @@ class BrowseScreen extends React.Component {
   fetchData = () => {
     fetch(HOST_URL + "/projects-cards/")
       .then(response => response.json())
-      .then(responseJson => this.setState({ projects: responseJson }))
+      .then(responseJson =>
+        this.setState({ projects: responseJson, refreshing: false })
+      )
       .catch(error => console.log(error));
   };
 
@@ -65,13 +74,19 @@ class BrowseScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        {this.state.projects.length === 0 && (
-          <ActivityIndicator
-            size="large"
-            color="#05C0BA"
-            style={{ marginTop: 34 }}
+      <ScrollView
+        style={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh}
           />
+        }
+      >
+        {this.state.projects.length === 0 && (
+          <View style={styles.indicatorContainer}>
+            <ActivityIndicator size="large" color="#05C0BA" />
+          </View>
         )}
 
         {this.state.projects.map(project => (
@@ -93,7 +108,7 @@ class BrowseScreen extends React.Component {
             }
           />
         ))}
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -101,6 +116,9 @@ class BrowseScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     margin: 14
+  },
+  indicatorContainer: {
+    marginTop: 34
   }
 });
 
