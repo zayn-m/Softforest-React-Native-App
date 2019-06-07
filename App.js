@@ -5,6 +5,7 @@ import BrowseScreen from "./src/screens/BrowseScreen/BrowseScreen";
 import LibraryScreen from "./src/screens/LibraryScreen/LibraryScreen";
 import SideDrawer from "./src/screens/SideDrawer/SideDrawer";
 import ProjectDetailScreen from "./src/screens/ProjectDetailScreen/ProjectDetailScreen";
+import ProfileScreen from "./src/screens/ProfileScreen/ProfileScreen";
 
 // Register screen
 Navigation.registerComponent("softforest.AuthScreen", () => AuthScreen);
@@ -15,6 +16,7 @@ Navigation.registerComponent(
   "softforest.ProjectDetailScreen",
   () => ProjectDetailScreen
 );
+Navigation.registerComponent("softforest.ProfileScreen", () => ProfileScreen);
 
 // Start app
 Navigation.setRoot({

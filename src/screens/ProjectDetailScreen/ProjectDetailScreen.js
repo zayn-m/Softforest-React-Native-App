@@ -5,7 +5,8 @@ import {
   Text,
   StyleSheet,
   BackHandler,
-  ScrollView
+  ScrollView,
+  TouchableOpacity
 } from "react-native";
 import ImageViewer from "react-native-image-zoom-viewer";
 import Video from "react-native-af-video-player";
@@ -87,6 +88,17 @@ class ProjectDetailScreen extends React.Component {
           userId: user,
           id: id,
           category: category
+        }
+      }
+    });
+  };
+
+  selectProfileHandler = () => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: "softforest.ProfileScreen",
+        passProps: {
+          userId: this.state.profile.user
         }
       }
     });
@@ -200,9 +212,11 @@ class ProjectDetailScreen extends React.Component {
                     {this.state.profile.profile_name}
                   </Text>
                   <Text>{this.state.profile.profile_title}</Text>
-                  <View style={styles.requestButtonContainer}>
-                    <Text style={styles.requestButton}>view profile</Text>
-                  </View>
+                  <TouchableOpacity onPress={this.selectProfileHandler}>
+                    <View style={styles.viewProfileContainer}>
+                      <Text style={styles.viewProfile}>view profile</Text>
+                    </View>
+                  </TouchableOpacity>
                 </View>
               </View>
               <View style={styles.card}>
@@ -348,11 +362,11 @@ const styles = StyleSheet.create({
   profileDescription: {
     flex: 1
   },
-  requestButtonContainer: {
+  viewProfileContainer: {
     alignItems: "center",
     marginTop: 20
   },
-  requestButton: {
+  viewProfile: {
     color: "#05C0BA",
     fontWeight: "bold",
     textTransform: "uppercase"
