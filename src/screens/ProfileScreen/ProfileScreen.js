@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Platform,
   Image,
   ScrollView,
   Dimensions,
@@ -14,9 +13,6 @@ import {
 import { Navigation } from "react-native-navigation";
 import Carousel from "react-native-snap-carousel";
 import { HOST_URL } from "../../settings";
-import Icon from "react-native-vector-icons/Ionicons";
-import Logo from "../../assets/logo.png";
-import Hr from "../../components/UI/Hr/Hr";
 import StarRating from "react-native-star-rating";
 
 class ProfileScreen extends React.Component {
@@ -238,7 +234,7 @@ const styles = StyleSheet.create({
   overviewContainer: {
     marginTop: 20,
     backgroundColor: "white",
-    elevation: 1
+    elevation: 2
   },
   overview: {
     margin: 10,

@@ -18,13 +18,15 @@ import HeadingText from "../../components/UI/HeadingText/HeadingText";
 import Button from "../../components/UI/Button/Button";
 import RecommendationItem from "../../components/RecommendationItem/RecommendationItem";
 import Comment from "../../components/Comment/Comment";
+import FeedbackModal from "../../components/FeedbackModal/FeedbackModal";
 
 class ProjectDetailScreen extends React.Component {
   state = {
     project: null,
     profile: null,
     recommendations: null,
-    reviews: null
+    reviews: null,
+    visible: false
   };
 
   componentDidMount() {
@@ -102,6 +104,14 @@ class ProjectDetailScreen extends React.Component {
         }
       }
     });
+  };
+
+  toggleModal = () => {
+    this.setState({ visible: true });
+  };
+
+  closeModal = () => {
+    this.setState({ visible: false });
   };
 
   render() {
@@ -259,9 +269,17 @@ class ProjectDetailScreen extends React.Component {
                   />
                 ))}
               </View>
+              <View style={{ marginTop: 10 }}>
+                <Button
+                  title="Give Feedback"
+                  color="#05C0BA"
+                  onPress={this.toggleModal}
+                />
+              </View>
             </View>
           </>
         ) : null}
+        <FeedbackModal visible={this.state.visible} onClose={this.closeModal} />
       </ScrollView>
     );
   }
