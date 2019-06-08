@@ -20,116 +20,75 @@ const startTabs = () => {
       root: {
         sideMenu: {
           id: "sideMenu",
-          left: {
+          right: {
             component: {
               id: "Drawer",
               name: "softforest.SideDrawerScreen"
             }
           },
           center: {
-            stack: {
+            bottomTabs: {
               children: [
                 {
-                  bottomTabs: {
+                  stack: {
                     children: [
                       {
-                        stack: {
-                          children: [
-                            {
-                              component: {
-                                name: "softforest.BrowseScreen",
-                                passProps: {
-                                  text: "This is tab 1"
-                                }
-                              }
-                            }
-                          ],
-                          options: {
-                            topBar: {
-                              title: {
-                                text: "Browse"
-                              },
-                              leftButtons: [
-                                {
-                                  icon: sources[2],
-                                  id: "toggleDrawer"
-                                }
-                              ]
-                            },
-                            bottomTab: {
-                              text: "Browse",
-                              icon: sources[0],
-                              testID: "FIRST_TAB_BAR_BUTTON"
-                            }
-                          }
-                        }
-                      },
-                      {
-                        stack: {
-                          children: [
-                            {
-                              component: {
-                                name: "softforest.LibraryScreen",
-                                passProps: {
-                                  text: "This is tab 2"
-                                }
-                              }
-                            }
-                          ],
-                          options: {
-                            topBar: {
-                              title: {
-                                text: "Library"
-                              },
-
-                              leftButtons: [
-                                {
-                                  icon: sources[2],
-                                  id: "toggleDrawer"
-                                }
-                              ]
-                            },
-                            bottomTab: {
-                              text: "Library",
-                              icon: sources[1],
-                              testID: "SECOND_TAB_BAR_BUTTON"
-                            }
-                          }
-                        }
-                      },
-                      {
-                        stack: {
-                          children: [
-                            {
-                              component: {
-                                name: "softforest.LibraryScreen",
-                                passProps: {
-                                  text: "This is tab 2"
-                                }
-                              }
-                            }
-                          ],
-                          options: {
-                            topBar: {
-                              title: {
-                                text: "Cart"
-                              },
-                              leftButtons: [
-                                {
-                                  icon: sources[2],
-                                  id: "toggleDrawer"
-                                }
-                              ]
-                            },
-                            bottomTab: {
-                              text: "Cart",
-                              icon: sources[3],
-                              testID: "SECOND_TAB_BAR_BUTTON"
-                            }
+                        component: {
+                          name: "softforest.BrowseScreen",
+                          passProps: {
+                            text: "This is tab 1"
                           }
                         }
                       }
-                    ]
+                    ],
+                    options: {
+                      topBar: {
+                        title: {
+                          text: "Browse"
+                        },
+                        rightButtons: [
+                          {
+                            icon: sources[2],
+                            id: "toggleDrawer"
+                          }
+                        ]
+                      },
+                      bottomTab: {
+                        text: "Browse",
+                        icon: sources[0],
+                        testID: "FIRST_TAB_BAR_BUTTON"
+                      }
+                    }
+                  }
+                },
+                {
+                  component: {
+                    name: "softforest.LibraryScreen",
+                    passProps: {
+                      text: "This is tab 2"
+                    },
+                    options: {
+                      bottomTab: {
+                        text: "Library",
+                        icon: sources[1],
+                        testID: "SECOND_TAB_BAR_BUTTON"
+                      }
+                    }
+                  }
+                },
+                {
+                  component: {
+                    name: "softforest.LibraryScreen",
+                    passProps: {
+                      text: "This is tab 3"
+                    },
+                    options: {
+                      bottomTab: {
+                        text: "Cart",
+                        icon: sources[3],
+                        testID: "THIRD_TAB_BAR_BUTTON"
+                      }
+                    }
                   }
                 }
               ]

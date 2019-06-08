@@ -23,6 +23,10 @@ class FeedbackModal extends React.Component {
     });
   }
 
+  componentDidMount() {
+    console.log(this.props);
+  }
+
   render() {
     return (
       <Modal visible={this.props.visible} animationType="slide">

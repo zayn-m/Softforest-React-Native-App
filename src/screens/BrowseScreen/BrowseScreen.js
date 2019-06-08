@@ -34,7 +34,7 @@ class BrowseScreen extends React.Component {
     if (event.buttonId === "toggleDrawer") {
       Navigation.mergeOptions("Drawer", {
         sideMenu: {
-          left: {
+          right: {
             visible: true
           }
         }
@@ -118,7 +118,9 @@ const styles = StyleSheet.create({
     margin: 14
   },
   indicatorContainer: {
-    marginTop: 34
+    marginTop: 70,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 

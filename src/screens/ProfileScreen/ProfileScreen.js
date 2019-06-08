@@ -44,8 +44,25 @@ class ProfileScreen extends React.Component {
         .then(response => response.json())
         .then(responseJson => this.setState({ projects: responseJson }))
         .catch(error => console.log(error));
-    }, 500);
+    }, 200);
   }
+
+  componentWillUnmount() {
+    this.backHandler.remove();
+    this.navigationEventListener.remove();
+  }
+
+  navigationButtonPressed = event => {
+    if (event.buttonId === "toggleDrawer") {
+      Navigation.mergeOptions("Drawer", {
+        sideMenu: {
+          right: {
+            visible: true
+          }
+        }
+      });
+    }
+  };
 
   selectProjectHandler = (slug, user, id, category) => {
     Navigation.push(this.props.componentId, {

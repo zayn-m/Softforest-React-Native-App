@@ -19,9 +19,16 @@ import Button from "../../components/UI/Button/Button";
 import RecommendationItem from "../../components/RecommendationItem/RecommendationItem";
 import Comment from "../../components/Comment/Comment";
 import FeedbackModal from "../../components/FeedbackModal/FeedbackModal";
+import SkeletonLoader from "react-native-skeleton-loader";
 
 class ProjectDetailScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this._isMounted = false;
+  }
+
   state = {
+    loading: true,
     project: null,
     profile: null,
     recommendations: null,
@@ -30,50 +37,56 @@ class ProjectDetailScreen extends React.Component {
   };
 
   componentDidMount() {
+    this._isMounted = true;
     this.navigationEventListener = Navigation.events().bindComponent(this);
     this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
       Navigation.pop(this.props.componentId); // works best when the goBack is async
       return true;
     });
 
-    this.fetchData();
+    this._isMounted && this.fetchData();
   }
 
   componentWillUnmount() {
     this.backHandler.remove();
+    this.navigationEventListener.remove();
+    this._isMounted = false;
   }
 
   fetchData = () => {
-    fetch(`${HOST_URL}/projects-detail/${this.props.projectSlug}/`)
-      .then(response => response.json())
-      .then(responseJson => this.setState({ project: responseJson }))
-      .catch(error => console.log(error));
+    Promise.all([
+      fetch(`${HOST_URL}/projects-detail/${this.props.projectSlug}/`)
+        .then(response => response.json())
+        .then(responseJson => this.setState({ project: responseJson }))
+        .catch(error => console.log(error)),
+      fetch(`${HOST_URL}/profiles/${this.props.userId}/`)
+        .then(response => response.json())
+        .then(responseJson => this.setState({ profile: responseJson }))
+        .catch(error => console.log(error)),
+      fetch(
+        `${HOST_URL}/projects-random-list/?q=${this.props.category}&id=${
+          this.props.id
+        }`
+      )
+        .then(response => response.json())
+        .then(responseJson => this.setState({ recommendations: responseJson }))
+        .catch(error => console.log(error)),
 
-    fetch(`${HOST_URL}/profiles/${this.props.userId}/`)
-      .then(response => response.json())
-      .then(responseJson => this.setState({ profile: responseJson }))
-      .catch(error => console.log(error));
-
-    fetch(
-      `${HOST_URL}/projects-random-list/?q=${this.props.category}&id=${
-        this.props.id
-      }`
-    )
-      .then(response => response.json())
-      .then(responseJson => this.setState({ recommendations: responseJson }))
-      .catch(error => console.log(error));
-
-    fetch(`${HOST_URL}/comments/?q=${this.props.id}`)
-      .then(response => response.json())
-      .then(responseJson => this.setState({ reviews: responseJson }))
-      .catch(error => console.log(error));
+      fetch(`${HOST_URL}/comments/?q=${this.props.id}`)
+        .then(response => response.json())
+        .then(responseJson => {
+          this._isMounted &&
+            this.setState({ reviews: responseJson, loading: true });
+        })
+        .catch(error => console.log(error))
+    ]);
   };
 
   navigationButtonPressed = event => {
     if (event.buttonId === "toggleDrawer") {
       Navigation.mergeOptions("Drawer", {
         sideMenu: {
-          left: {
+          right: {
             visible: true
           }
         }
@@ -278,7 +291,32 @@ class ProjectDetailScreen extends React.Component {
               </View>
             </View>
           </>
-        ) : null}
+        ) : (
+          <>
+            <View style={styles.skeletonPlaceholder}>
+              <SkeletonLoader
+                type="rectangle"
+                height={250}
+                loading={this.state.loading}
+              />
+            </View>
+            <View style={styles.skeletonPlaceholder}>
+              <SkeletonLoader
+                type="rectangle"
+                rows={1}
+                height={40}
+                loading={this.state.loading}
+              />
+            </View>
+            <View style={styles.skeletonParaPlaceholder}>
+              <SkeletonLoader
+                type="rectangle"
+                rows={4}
+                loading={this.state.loading}
+              />
+            </View>
+          </>
+        )}
         <FeedbackModal visible={this.state.visible} onClose={this.closeModal} />
       </ScrollView>
     );
@@ -288,6 +326,14 @@ class ProjectDetailScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     margin: 0
+  },
+  skeletonPlaceholder: {
+    marginTop: 5,
+    width: "99%"
+  },
+  skeletonParaPlaceholder: {
+    marginTop: 5,
+    width: "95%"
   },
   thumbnailContainer: {
     width: "100%",
