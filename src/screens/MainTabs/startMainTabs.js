@@ -9,7 +9,10 @@ const startTabs = () => {
       Platform.OS === "android" ? "md-folder" : "ios-folder",
       30
     ),
-    Icon.getImageSource(Platform.OS === "android" ? "md-menu" : "ios-menu", 30),
+    Icon.getImageSource(
+      Platform.OS === "android" ? "md-funnel" : "ios-funnel",
+      30
+    ),
     Icon.getImageSource(Platform.OS === "android" ? "md-cart" : "ios-cart", 30),
     Icon.getImageSource(
       Platform.OS === "android" ? "md-contact" : "ios-contact",
@@ -52,9 +55,9 @@ const startTabs = () => {
                         },
                         rightButtons: [
                           {
+                            color: "white",
                             icon: sources[2],
-                            id: "toggleDrawer",
-                            color: "white"
+                            id: "toggleDrawer"
                           }
                         ]
                       },
@@ -92,6 +95,36 @@ const startTabs = () => {
                         text: "Cart",
                         icon: sources[3],
                         testID: "THIRD_TAB_BAR_BUTTON"
+                      }
+                    }
+                  }
+                },
+                {
+                  stack: {
+                    children: [
+                      {
+                        component: {
+                          name: "softforest.AccountScreen",
+                          passProps: {
+                            text: "This is tab 4"
+                          }
+                        }
+                      }
+                    ],
+                    options: {
+                      topBar: {
+                        title: {
+                          text: "Account",
+                          color: "white"
+                        },
+                        background: {
+                          color: "#05C0BA"
+                        }
+                      },
+                      bottomTab: {
+                        text: "Account",
+                        icon: sources[4],
+                        testID: "FOURTH_TAB_BAR_BUTTON"
                       }
                     }
                   }

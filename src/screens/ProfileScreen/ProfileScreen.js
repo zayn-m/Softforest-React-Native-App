@@ -52,18 +52,6 @@ class ProfileScreen extends React.Component {
     this.navigationEventListener.remove();
   }
 
-  navigationButtonPressed = event => {
-    if (event.buttonId === "toggleDrawer") {
-      Navigation.mergeOptions("Drawer", {
-        sideMenu: {
-          right: {
-            visible: true
-          }
-        }
-      });
-    }
-  };
-
   selectProjectHandler = (slug, user, id, category) => {
     Navigation.push(this.props.componentId, {
       component: {
@@ -73,6 +61,14 @@ class ProfileScreen extends React.Component {
           userId: user,
           id: id,
           category: category
+        },
+        options: {
+          topBar: {
+            title: {
+              text: ""
+            },
+            rightButtons: []
+          }
         }
       }
     });

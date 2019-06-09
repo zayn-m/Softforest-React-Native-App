@@ -36,8 +36,6 @@ class ProjectDetailScreen extends React.Component {
     visible: false
   };
 
-  componentWillMount() {}
-
   componentDidMount() {
     this._isMounted = true;
     this.navigationEventListener = Navigation.events().bindComponent(this);
@@ -105,6 +103,14 @@ class ProjectDetailScreen extends React.Component {
           userId: user,
           id: id,
           category: category
+        },
+        options: {
+          topBar: {
+            title: {
+              text: ""
+            },
+            rightButtons: []
+          }
         }
       }
     });
@@ -116,6 +122,14 @@ class ProjectDetailScreen extends React.Component {
         name: "softforest.ProfileScreen",
         passProps: {
           userId: this.state.profile.user
+        },
+        options: {
+          topBar: {
+            title: {
+              text: ""
+            },
+            rightButtons: []
+          }
         }
       }
     });

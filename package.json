@@ -12,6 +12,7 @@
     "react": "16.8.3",
     "react-native": "^0.59.9",
     "react-native-af-video-player": "^0.2.1",
+    "react-native-elements": "^1.1.0",
     "react-native-image-zoom-viewer": "^2.2.26",
     "react-native-keep-awake": "^4.0.0",
     "react-native-linear-gradient": "^2.5.4",

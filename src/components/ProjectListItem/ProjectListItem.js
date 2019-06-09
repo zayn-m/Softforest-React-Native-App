@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
     elevation: 2,
     width: "100%",
     height: 100,
-    marginTop: 10
+    marginTop: 10,
+    marginBottom: 1
   },
   imageContainer: {
     flex: 0.8,

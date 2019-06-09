@@ -10,13 +10,15 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import Logo from "../../assets/logo.png";
 import Hr from "../../components/UI/Hr/Hr";
+import HeadingText from "../../components/UI/HeadingText/HeadingText";
 
 class SideDrawer extends React.Component {
   render() {
     return (
       <View style={styles.container}>
         <TouchableOpacity>
-          <View style={styles.logoContainer}>
+          <HeadingText>Filters</HeadingText>
+          {/* <View style={styles.logoContainer}>
             <Image source={Logo} style={styles.logo} />
           </View>
           <Hr />
@@ -48,7 +50,7 @@ class SideDrawer extends React.Component {
               style={styles.drawerItemIcon}
             />
             <Text>Sign Out</Text>
-          </View>
+          </View> */}
         </TouchableOpacity>
       </View>
     );
