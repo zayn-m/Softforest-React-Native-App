@@ -60,14 +60,21 @@ class BrowseScreen extends React.Component {
           userId: user,
           id: id,
           category: category
+        },
+        options: {
+          topBar: {
+            title: {
+              text: ""
+            }
+          }
         }
-        // options: {
-        //     topBar: {
-        //         title: {
-        //             text: 'Cafe Management System'
-        //         }
-        //     }
-        // }
+      }
+    });
+    Navigation.setDefaultOptions({
+      topBar: {
+        backButton: {
+          color: "white"
+        }
       }
     });
   };

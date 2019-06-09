@@ -36,6 +36,8 @@ class ProjectDetailScreen extends React.Component {
     visible: false
   };
 
+  componentWillMount() {}
+
   componentDidMount() {
     this._isMounted = true;
     this.navigationEventListener = Navigation.events().bindComponent(this);

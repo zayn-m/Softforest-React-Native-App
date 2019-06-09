@@ -21,14 +21,25 @@ const projectListItem = props => {
               starSize={18}
             />
             <Text>
-              <Text style={styles.rating}> {props.ratings}</Text> (12)
+              <Text style={styles.rating}> {props.ratings}</Text>
             </Text>
           </View>
           <View>
             <Text>{props.title}</Text>
           </View>
           <View style={styles.priceContainer}>
-            <Text style={styles.price}>${props.price}</Text>
+            {props.onSale ? (
+              <View>
+                <Text style={styles.discountText}>
+                  ${props.discountRate}{" "}
+                  <Text style={styles.strike}> ${props.price}</Text>
+                </Text>
+              </View>
+            ) : (
+              <View>
+                <Text style={styles.priceText}>${props.price}</Text>
+              </View>
+            )}
           </View>
         </View>
       </View>
@@ -66,13 +77,21 @@ const styles = StyleSheet.create({
     margin: 8
   },
   priceContainer: {
-    flex: 1
+    flex: 1,
+    marginTop: 10
   },
-  price: {
-    marginTop: 10,
+  priceText: {
     fontSize: 16,
-    color: "#05C0BA",
-    textAlign: "right"
+    fontWeight: "bold"
+  },
+  discountText: {
+    fontSize: 16,
+    fontWeight: "bold"
+  },
+  strike: {
+    fontSize: 14,
+    color: "#aaa",
+    textDecorationLine: "line-through"
   }
 });
 

@@ -44,12 +44,17 @@ const startTabs = () => {
                     options: {
                       topBar: {
                         title: {
-                          text: "Browse"
+                          text: "Browse",
+                          color: "white"
+                        },
+                        background: {
+                          color: "#05C0BA"
                         },
                         rightButtons: [
                           {
                             icon: sources[2],
-                            id: "toggleDrawer"
+                            id: "toggleDrawer",
+                            color: "white"
                           }
                         ]
                       },
