@@ -1,7 +1,15 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { connect } from "react-redux";
+import { authClearStorage } from "../../store/actions/index";
+import RNRestart from "react-native-restart";
 
 class AccountScreen extends React.Component {
+  logout = () => {
+    this.props.logout();
+    RNRestart.Restart();
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -9,9 +17,9 @@ class AccountScreen extends React.Component {
           <Text style={styles.textContainer}>Share our app</Text>
           <Text style={styles.textContainer}>Terms of use</Text>
           <Text style={styles.textContainer}>View Privacy Policy</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.logout}>
             <View style={styles.authbuttonContainer}>
-              <Text style={styles.authbutton}>sign in</Text>
+              <Text style={styles.authbutton}>sign out</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -41,4 +49,13 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AccountScreen;
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: () => dispatch(authClearStorage())
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(AccountScreen);

@@ -8,19 +8,25 @@ import ProjectDetailScreen from "./src/screens/ProjectDetailScreen/ProjectDetail
 import ProfileScreen from "./src/screens/ProfileScreen/ProfileScreen";
 import AccountScreen from "./src/screens/AccountScreen/AccountScreen";
 import CartScreen from "./src/screens/CartScreen/CartScreen";
-import OrderScreen from './src/screens/OrderScreen/OrderScreen';
-import configStore from './src/store/configStore';
-import CheckoutScreen from './src/screens/CheckoutScreen/CheckoutScreen';
+import OrderScreen from "./src/screens/OrderScreen/OrderScreen";
+import configStore from "./src/store/configStore";
+import CheckoutScreen from "./src/screens/CheckoutScreen/CheckoutScreen";
 const store = configStore();
 // Register screen
-Navigation.registerComponentWithRedux("softforest.AuthScreen",
- () => AuthScreen,
- Provider,
- store
+Navigation.registerComponentWithRedux(
+  "softforest.AuthScreen",
+  () => AuthScreen,
+  Provider,
+  store
 );
 Navigation.registerComponent("softforest.SideDrawerScreen", () => SideDrawer);
 Navigation.registerComponent("softforest.BrowseScreen", () => BrowseScreen);
-Navigation.registerComponent("softforest.LibraryScreen", () => LibraryScreen);
+Navigation.registerComponentWithRedux(
+  "softforest.LibraryScreen",
+  () => LibraryScreen,
+  Provider,
+  store
+);
 Navigation.registerComponentWithRedux(
   "softforest.ProjectDetailScreen",
   () => ProjectDetailScreen,
@@ -28,16 +34,20 @@ Navigation.registerComponentWithRedux(
   store
 );
 Navigation.registerComponent("softforest.ProfileScreen", () => ProfileScreen);
-Navigation.registerComponent("softforest.AccountScreen", () => AccountScreen);
+Navigation.registerComponentWithRedux(
+  "softforest.AccountScreen",
+  () => AccountScreen,
+  Provider,
+  store
+);
 Navigation.registerComponentWithRedux(
   "softforest.CartScreen",
   () => CartScreen,
   Provider,
   store
 );
-Navigation.registerComponent('softforest.CheckoutScreen',()=>CheckoutScreen)
-Navigation.registerComponent("softforest.OrderScreen",()=>OrderScreen);
-
+Navigation.registerComponent("softforest.CheckoutScreen", () => CheckoutScreen);
+Navigation.registerComponent("softforest.OrderScreen", () => OrderScreen);
 
 // Start app
 Navigation.setRoot({

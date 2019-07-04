@@ -70,12 +70,27 @@ const startTabs = () => {
                   }
                 },
                 {
-                  component: {
-                    name: "softforest.LibraryScreen",
-                    passProps: {
-                      text: "This is tab 2"
-                    },
+                  stack: {
+                    children: [
+                      {
+                        component: {
+                          name: "softforest.LibraryScreen",
+                          passProps: {
+                            text: "This is tab 2"
+                          }
+                        }
+                      }
+                    ],
                     options: {
+                      topBar: {
+                        title: {
+                          text: "Library",
+                          color: "white"
+                        },
+                        background: {
+                          color: "#05C0BA"
+                        }
+                      },
                       bottomTab: {
                         text: "Library",
                         icon: sources[1],

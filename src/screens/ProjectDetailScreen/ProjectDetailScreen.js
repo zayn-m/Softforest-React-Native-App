@@ -22,8 +22,7 @@ import Comment from "../../components/Comment/Comment";
 import FeedbackModal from "../../components/FeedbackModal/FeedbackModal";
 import SkeletonLoader from "react-native-skeleton-loader";
 import { connect } from "react-redux";
-import {checkToCart,addToCart} from '../../store/actions/index';
-
+import { checkToCart, addToCart } from "../../store/actions/index";
 
 class ProjectDetailScreen extends React.Component {
   constructor(props) {
@@ -61,14 +60,14 @@ class ProjectDetailScreen extends React.Component {
     Promise.all([
       fetch(`${HOST_URL}/projects-detail/${this.props.projectSlug}/`)
         .then(response => response.json())
-        .then(responseJson =>{
-           this.setState({ project: responseJson })
-           if(this.props.userId && responseJson.id){
-            this.props.checkCart(this.props.userId,responseJson.id);
-            }
-          })
+        .then(responseJson => {
+          this.setState({ project: responseJson });
+          if (this.props.userId && responseJson.id) {
+            this.props.checkCart(this.props.userId, responseJson.id);
+          }
+        })
         .catch(error => console.log(error)),
-      fetch(`${HOST_URL}/profiles/${this.props.userId}/`)
+      fetch(`${HOST_URL}/profiles/${this.props.user}/`)
         .then(response => response.json())
         .then(responseJson => this.setState({ profile: responseJson }))
         .catch(error => console.log(error)),
@@ -151,9 +150,13 @@ class ProjectDetailScreen extends React.Component {
   closeModal = () => {
     this.setState({ visible: false });
   };
-  addToCartHandler= () => {
-    this.props.addRequest(this.props.userId,this.state.project.id,this.props.projects);
-};
+  addToCartHandler = () => {
+    this.props.addRequest(
+      this.props.userId,
+      this.state.project.id,
+      this.props.projects
+    );
+  };
 
   render() {
     let images = [];
@@ -163,18 +166,22 @@ class ProjectDetailScreen extends React.Component {
         images.push({ url: snapshot.image });
       });
     }
-    let addCartButton =(
-          <TouchableOpacity style={styles.addToCartButtonContainer} onPress={this.addToCartHandler}>
-                  <Text style={styles.addToCartButton}>ADD TO CART</Text>
-          </TouchableOpacity>
+    let addCartButton = (
+      <TouchableOpacity
+        style={styles.addToCartButtonContainer}
+        onPress={this.addToCartHandler}
+      >
+        <Text style={styles.addToCartButton}>ADD TO CART</Text>
+      </TouchableOpacity>
     );
-    if( this.props.loading){
-      addCartButton=<ActivityIndicator/>;
-    }
-    else if(this.props.userId && this.props.cartAdded){
-      addCartButton=(<View style={styles.addToCartButtonContainer}>
-        <Text style={styles.addToCartButton}>In a Cart</Text>
-    </View>);
+    if (this.props.loading) {
+      addCartButton = <ActivityIndicator />;
+    } else if (this.props.userId && this.props.cartAdded) {
+      addCartButton = (
+        <View style={styles.addToCartButtonContainer}>
+          <Text style={styles.addToCartButton}>In a Cart</Text>
+        </View>
+      );
     }
     return (
       <ScrollView style={styles.container}>
@@ -229,7 +236,7 @@ class ProjectDetailScreen extends React.Component {
                   <Button title="Buy Now" color="#05C0BA" />
                 </View>
                 <View style={styles.addToCartButtonContainer}>
-                {addCartButton}
+                  {addCartButton}
                 </View>
               </View>
               <View style={[styles.thumbnailContainer, styles.card]}>
@@ -323,13 +330,13 @@ class ProjectDetailScreen extends React.Component {
                   />
                 ))}
               </View>
-              <View style={{ marginTop: 10 }}>
+              {/* <View style={{ marginTop: 10 }}>
                 <Button
                   title="Give Feedback"
                   color="#05C0BA"
                   onPress={this.toggleModal}
                 />
-              </View>
+              </View> */}
             </View>
           </>
         ) : (
@@ -483,18 +490,22 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    userId:state.auth.userId,
-    cartAdded:state.cart.cartAdded,
-    projects:state.cart.data,
-    loading:state.cart.loading
+    userId: state.auth.userId,
+    cartAdded: state.cart.cartAdded,
+    projects: state.cart.data,
+    loading: state.cart.loading
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return{
-    addRequest:(userId,id,projects)=>dispatch(addToCart(userId,id,projects)),
-    checkCart:(userId,id)=>dispatch(checkToCart(userId,id))
+  return {
+    addRequest: (userId, id, projects) =>
+      dispatch(addToCart(userId, id, projects)),
+    checkCart: (userId, id) => dispatch(checkToCart(userId, id))
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(ProjectDetailScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProjectDetailScreen);

@@ -177,6 +177,7 @@ dependencies {
     implementation project(':react-native-linear-gradient')
     implementation project(':react-native-orientation')
     implementation project(':react-native-keep-awake')
+    implementation project(':react-native-restart')
 }
 
 // Run this once to be able to run the application with BUCK

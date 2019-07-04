@@ -34,6 +34,7 @@ class BrowseScreen extends React.Component {
   };
 
   componentDidMount() {
+    console.disableYellowBox = true;
     this.navigationEventListener = Navigation.events().bindComponent(this);
     this.keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -157,7 +158,7 @@ class BrowseScreen extends React.Component {
         name: "softforest.ProjectDetailScreen",
         passProps: {
           projectSlug: slug,
-          userId: user,
+          user: user,
           id: id,
           category: category
         },

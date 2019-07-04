@@ -16,6 +16,7 @@ import com.brentvatne.react.ReactVideoPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.github.yamill.orientation.OrientationPackage;
 import com.corbt.keepawake.KCKeepAwakePackage;
+import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,7 +49,8 @@ public class MainApplication extends NavigationApplication {
             new ReactVideoPackage(),
             new LinearGradientPackage(),
             new OrientationPackage(),
-            new KCKeepAwakePackage()
+            new KCKeepAwakePackage(),
+            new ReactNativeRestartPackage()
     );
   }
 

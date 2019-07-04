@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Platform,
-  Image
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { CheckBox, Divider } from "react-native-elements";
 import Button from "../../components/UI/Button/Button";
 
@@ -68,7 +61,6 @@ class SideDrawer extends React.Component {
     const checkboxes = Object.assign(this.state.checkboxes, changedCheckbox);
 
     this.setState({ checkboxes });
-    console.log(checkboxes);
   };
 
   render() {
@@ -78,26 +70,24 @@ class SideDrawer extends React.Component {
           <Text style={styles.heading}>Platform</Text>
 
           {this.state.checkboxes.map((cb, i) => {
-            console.log(i);
-            // if (i < 3) {
-            //   return (
-            //     <CheckBox
-            //       textStyle={styles.textCheckbox}
-            //       containerStyle={styles.checkbox}
-            //       key={cb.id}
-            //       title={cb.title}
-            //       checked={cb.checked}
-            //       onPress={() => this.toggleCheckbox(cb.id)}
-            //     />
-            //   );
-            // }
+            if (i < 3) {
+              return (
+                <CheckBox
+                  textStyle={styles.textCheckbox}
+                  containerStyle={styles.checkbox}
+                  key={cb.id}
+                  title={cb.title}
+                  checked={cb.checked}
+                  onPress={() => this.toggleCheckbox(cb.id)}
+                />
+              );
+            }
           })}
 
           <Divider style={styles.divider} />
           <Text style={styles.heading}>Technologies</Text>
           {this.state.checkboxes.map((cb, i) => {
-            console.log(i);
-            if (i < 3) {
+            if (cb.id > 3 && cb.id < 7) {
               return (
                 <CheckBox
                   textStyle={styles.textCheckbox}

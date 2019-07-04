@@ -8,7 +8,9 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
+import axios from "axios";
 import StarRating from "react-native-star-rating";
+import { HOST_URL } from "../../settings";
 import Hr from "../UI/Hr/Hr";
 
 class FeedbackModal extends React.Component {
@@ -23,9 +25,36 @@ class FeedbackModal extends React.Component {
     });
   }
 
-  componentDidMount() {
-    console.log(this.props);
-  }
+  submit = () => {
+    const type = "project";
+    const user = +this.props.userId;
+    const slug = this.props.slug;
+    const data = {
+      content: this.state.text,
+      rating: this.state.starCount
+    };
+
+    axios
+      .post(`${HOST_URL}/comments/create/`, data, {
+        params: {
+          type,
+          slug,
+          user
+        },
+        headers: {
+          Authorization: `Token ${this.props.token}`
+        }
+      })
+      .then(response => {
+        console.log(response);
+        if (response.status === 201) {
+          alert("Thanks for your feedback");
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   render() {
     return (
@@ -57,7 +86,7 @@ class FeedbackModal extends React.Component {
             />
           </View>
           <View style={styles.postButton}>
-            <Button title="Post" color="#05C0BA" onPress={this.props.submit} />
+            <Button title="Post" color="#05C0BA" onPress={this.submit} />
           </View>
           <TouchableOpacity onPress={this.props.onClose}>
             <View style={styles.closeButtonContainer}>

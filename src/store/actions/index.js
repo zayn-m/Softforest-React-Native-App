@@ -1,6 +1,10 @@
+export {
+  authSignin,
+  authSignUp,
+  authAutoSignIn,
+  authClearStorage
+} from "./auth";
 
-export  {authSignin,authSignUp,authAutoSignIn} from './auth';
+export { uiStartLoading, uiStopLoading } from "./ui";
 
-export {uiStartLoading,uiStopLoading} from './ui';
-
-export {addToCart,checkToCart} from './cart';
+export { addToCart, checkToCart } from "./cart";

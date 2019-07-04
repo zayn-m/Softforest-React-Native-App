@@ -58,7 +58,7 @@ class ProfileScreen extends React.Component {
         name: "softforest.ProjectDetailScreen",
         passProps: {
           projectSlug: slug,
-          userId: user,
+          user: user,
           id: id,
           category: category
         },
